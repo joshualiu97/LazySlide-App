@@ -5,9 +5,11 @@ import {
     Text,
     View,
     TouchableOpacity,
+    
     Alert
 } from 'react-native';
 import { AuthSession } from 'expo';
+import io from 'socket.io-client';
 
 // const instructions = Platform.select({
 //   ios: 'Press Cmd+R to reload,\n' + 'Cmd+D or shake for dev menu',
@@ -15,40 +17,76 @@ import { AuthSession } from 'expo';
 // });
 const instructions = "Open and close your curtains with only a press of a button!";
 
+class Home extends Component {
+    // constructor(props) {
+    //     super(props);
+    // }
 
-const Home = () => {
-    return (
-        <View style={styles.container}>
-        {/* flex: 1, main container  */}
+    componentDidMount() {
+        // console.log("Hi");
+        this.socket = io('http://192.168.137.201:8080', {
+            transports: ['websocket'], jsonp: false
+        });
+        this.socket.connect();
+        this.socket.on('connect', () => {
+            console.log('connected to socket server1');
+        });
+    }
 
-        <View style={styles.header}>
-        {/* top half, contains title and intro message */}
-            <Text style={styles.title}>LazySlide</Text>
-            <Text style={styles.instructions}>{instructions}</Text>
-        </View>
+    onOpenPress = (event) => {
+        event.stopPropagation();
+        this.socket.emit('instruction', 'open');
+        console.log("open pressed");
+    }
+      
+    onClosePress = (event) => {
+        event.stopPropagation();
+        this.socket.emit('instruction', 'close');
+        console.log("close pressed");
+    }
+    
+    onRelease = (event) => {
+        event.stopPropagation();
+        this.socket.emit('instruction', 'stop');
+        console.log("stop pressed");
+    }
 
-            <View style={styles.button_container}>
-            {/* bottom half container */}
-                <View style={styles.buttons}>
-                {/* button container */}
-                    <TouchableOpacity
-                        style={styles.button}
-                        onPress={() => Alert.alert('Opening curtains')}
-                    >
-                        <Text style={styles.button_text}>Open</Text>
-                    </TouchableOpacity>
+    render() {
+        return (
+            <View style={styles.container}>
+            {/* flex: 1, main container  */}
 
-                    <TouchableOpacity
-                        style={styles.button}
-                        onPress={() => Alert.alert('Closing curtains')}
-                    >
-                        <Text style={styles.button_text}>Close</Text>
-                    </TouchableOpacity>
+                <View style={styles.header}>
+                {/* top half, contains title and intro message */}
+                    <Text style={styles.title}>LazySlide</Text>
+                    <Text style={styles.instructions}>{instructions}</Text>
+                </View>
+
+                <View style={styles.button_container}>
+                {/* bottom half container */}
+                    
+                    <View style={styles.buttons}>
+                    {/* button container */}
+                        <TouchableOpacity
+                            style={styles.button}
+                            onPress={this.onOpenPress}
+                        >
+                            <Text style={styles.button_text}>Open</Text>
+                        </TouchableOpacity>
+
+                        <TouchableOpacity
+                            style={styles.button}
+                            onPress={this.onClosePress}
+                        >
+                            <Text style={styles.button_text}>Close</Text>
+                        </TouchableOpacity>
+                    </View>
+
                 </View>
 
             </View>
-        </View>
-    )
+        );
+    }
 }
 
 const styles = StyleSheet.create({
