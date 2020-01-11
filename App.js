@@ -4,39 +4,50 @@ import {
   StyleSheet,
   Text,
   View,
-  Button,
+  TouchableOpacity,
   Alert
 } from 'react-native';
+import { AuthSession } from 'expo';
 
 // const instructions = Platform.select({
 //   ios: 'Press Cmd+R to reload,\n' + 'Cmd+D or shake for dev menu',
 //   android: 'Double tap R on your keyboard to reload,\n' + 'Shake or press menu button for dev menu',
 // });
-const instructions = "Press open to open. Press close to close.";
+const instructions = "Open and close your curtains with only a press of a button!";
 
 export default class App extends Component {
   render() {
     return (
       <View style={styles.container}>
-        <Text style={styles.title}>LazySlide</Text>
-        <Text style={styles.instructions}>{instructions}</Text>
+      {/* flex: 1, main container  */}
         
-        <View style={styles.buttons}>
-          <View style={styles.button}>
-            <Button
-            title="Open"
-            onPress={() => Alert.alert('Opening curtains')}
-            />
+        <View style={styles.header}>
+        {/* top half, contains title and intro message */}
+          <Text style={styles.title}>LazySlide</Text>
+          <Text style={styles.instructions}>{instructions}</Text>
+        </View>
+
+        <View style={styles.button_container}>
+        {/* bottom half container */}
+          <View style={styles.buttons}>
+          {/* button container */}
+            <TouchableOpacity
+              style={styles.button}
+              onPress={() => Alert.alert('Opening curtains')}
+            >
+              <Text style={styles.button_text}>Open</Text>
+            </TouchableOpacity>
+
+            <TouchableOpacity
+              style={styles.button}
+              onPress={() => Alert.alert('Closing curtains')}
+            >
+              <Text style={styles.button_text}>Close</Text>
+            </TouchableOpacity>
           </View>
-          <View style={styles.button}>
-            <Button
-            title="Close"
-            onPress={() => Alert.alert('Closing curtains')}
-            />
-          </View>
+
         </View>
       </View>
-      
     );
   }
 }
@@ -48,6 +59,14 @@ const styles = StyleSheet.create({
     justifyContent:'center',
     backgroundColor: 'lightblue',
   },
+  
+  header: {
+    flex:2,
+    // backgroundColor: 'red',
+    width: '80%',
+    alignItems: 'center',
+    justifyContent:'center',
+  },
   title: {
     fontSize: 40,
     fontWeight: 'bold',
@@ -55,20 +74,31 @@ const styles = StyleSheet.create({
   instructions: {
     fontSize: 20,
     textAlign: 'center',
-    marginBottom: 200,
+  },
+
+  button_container: {
+    flex: 2,
+    justifyContent: 'center',
+    flexDirection: 'row',
   },
   buttons: {
     alignItems: 'center',
-    flexDirection: 'row',
     justifyContent: 'center',
+    flexDirection: 'row',
     color: 'white',
+    // backgroundColor: 'red',
   },
   button: {
     borderRadius: 10,
     backgroundColor: '#627E8D',
-    color: 'white',
     width: 150,
     height: 60,
     margin: 10,
+    alignItems: 'center',
+    justifyContent:'center',
+  },
+  button_text: {
+    color: 'white',
+    fontSize: 20,
   },
 });
