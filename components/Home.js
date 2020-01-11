@@ -5,7 +5,7 @@ import {
     Text,
     View,
     TouchableOpacity,
-    
+    TouchableWithoutFeedback,
     Alert
 } from 'react-native';
 import { AuthSession } from 'expo';
@@ -24,13 +24,13 @@ class Home extends Component {
 
     componentDidMount() {
         // console.log("Hi");
-        this.socket = io('http://192.168.137.201:8080', {
+        this.socket = io('http://128.97.244.45:8080',{ //'http://192.168.137.201:8080', {
             transports: ['websocket'], jsonp: false
         });
-        this.socket.connect();
-        this.socket.on('connect', () => {
-            console.log('connected to socket server1');
-        });
+    }
+
+    componentWillUnmount() {
+        this.socket.disconnect();
     }
 
     onOpenPress = (event) => {
@@ -67,19 +67,19 @@ class Home extends Component {
                     
                     <View style={styles.buttons}>
                     {/* button container */}
-                        <TouchableOpacity
-                            style={styles.button}
-                            onPress={this.onOpenPress}
-                        >
-                            <Text style={styles.button_text}>Open</Text>
-                        </TouchableOpacity>
+                        
+                        <TouchableWithoutFeedback onPressIn={this.onOpenPress} onPressOut={this.onRelease}>
+                            <View style={styles.button}>
+                                <Text style={styles.button_text}>Open</Text>
+                            </View>
+                        </TouchableWithoutFeedback>
 
-                        <TouchableOpacity
-                            style={styles.button}
-                            onPress={this.onClosePress}
-                        >
-                            <Text style={styles.button_text}>Close</Text>
-                        </TouchableOpacity>
+                        <TouchableWithoutFeedback onPressIn={this.onClosePress} onPressOut={this.onRelease}>
+                            <View style={styles.button}>
+                                <Text style={styles.button_text}>Close</Text>
+                            </View>
+                        </TouchableWithoutFeedback>
+
                     </View>
 
                 </View>

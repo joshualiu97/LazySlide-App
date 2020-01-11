@@ -1,0 +1,7 @@
+IdeaHacks 2020
+Ellie Cheng, Eric Wang, Joshua Liu, Melody Chen, Ryan Tong
+
+
+Steps for VPN through openconnect(connects to UCLA sercured netowrk):
+sudo openconnect ssl.vpn.ucla.edu
+Enter credentials.
