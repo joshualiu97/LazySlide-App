@@ -8,6 +8,7 @@ import {
   Alert
 } from 'react-native';
 import { AuthSession } from 'expo';
+import * as Font from 'expo-font';
 
 // const instructions = Platform.select({
 //   ios: 'Press Cmd+R to reload,\n' + 'Cmd+D or shake for dev menu',
@@ -16,6 +17,13 @@ import { AuthSession } from 'expo';
 const instructions = "Open and close your curtains with only a press of a button!";
 
 export default class App extends Component {
+  componentDidMount() {
+    Font.loadAsync({
+      'raleway-regular': require('./assets/fonts/Raleway-Regular.ttf'),
+      'raleway-bold': require('./assets/fonts/Raleway-Bold.ttf'),
+    });
+  }
+
   render() {
     return (
       <View style={styles.container}>
@@ -54,6 +62,8 @@ export default class App extends Component {
 
 const styles = StyleSheet.create({
   container: {
+    fontFamily: "raleway-regular",
+
     flex: 1,
     alignItems: 'center',
     justifyContent:'center',
@@ -68,10 +78,12 @@ const styles = StyleSheet.create({
     justifyContent:'center',
   },
   title: {
-    fontSize: 40,
+    fontFamily: "raleway-bold",
+    fontSize: 60,
     fontWeight: 'bold',
   },
   instructions: {
+    fontFamily: "raleway-regular",
     fontSize: 20,
     textAlign: 'center',
   },
@@ -98,6 +110,7 @@ const styles = StyleSheet.create({
     justifyContent:'center',
   },
   button_text: {
+    fontFamily: "raleway-regular",
     color: 'white',
     fontSize: 20,
   },
