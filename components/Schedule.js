@@ -34,6 +34,7 @@ export default class Schedule extends Component {
     console.log("Moves in " + diff / 1000 + " seconds");
     setTimeout(() => {
       console.log("Timer done");
+
     }, diff);
     Alert.alert("Schedule set");
     this.props.navigation.navigate('Home');
@@ -41,11 +42,11 @@ export default class Schedule extends Component {
 
   render() {
     return (
-      <View style={styles.container}>
+      <View style={styles.container_sch}>
         
 
-        <View style={styles.title_container}>
-          <Text style={styles.title}>Select a time for curtain close/open!</Text>
+        <View style={styles.title_container_sch}>
+          <Text style={styles.title_sch}>Select a time for curtain close/open!</Text>
         </View>
 
 
@@ -72,18 +73,18 @@ export default class Schedule extends Component {
 }
 
 const styles = StyleSheet.create({
-  container: {
+  container_sch: {
     flex: 1,
     justifyContent: "center",
     backgroundColor: "lightblue"
   },
 
-  title_container: {
+  title_container_sch: {
     flex: 1,
     justifyContent: 'center',
     alignItems: 'center',
   },
-  title: {
+  title_sch: {
     fontFamily: "raleway-regular",
     fontSize: 30,
     textAlign: 'center',    
