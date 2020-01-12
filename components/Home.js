@@ -33,7 +33,7 @@ class Home extends Component {
             'raleway-bold': require('../assets/fonts/Raleway-Bold.ttf'),
         });
 
-        this.socket = io('http://128.97.244.92:8080',{
+        this.socket = io('http://128.97.244.65:8080',{
             transports: ['websocket'], jsonp: false
         });        
     }
@@ -62,13 +62,13 @@ class Home extends Component {
 
     onOpenAll = (event) => {
         event.stopPropagation();
-        this.socket.emit('instruction', 'openall');
+        this.socket.emit('instruction', 'open all');
         console.log("open all");
     }
 
     onCloseAll = (event) => {
         event.stopPropagation();
-        this.socket.emit('instruction', 'closeall');
+        this.socket.emit('instruction', 'close all');
         console.log("close all");
     }
 
@@ -88,7 +88,7 @@ class Home extends Component {
                 <View style={styles.schedule_container}>
                     <Text style={styles.schedule_header}>Schedule</Text>                    
                     <View style={styles.buttons}>
-                        <TouchableOpacity onPress={() => this.props.navigation.navigate('Test')}>
+                        <TouchableOpacity onPress={() => this.props.navigation.navigate('Schedule')}>
                             <View style={styles.button}>
                                 <Text style={styles.button_text}>Set</Text>
                             </View>
