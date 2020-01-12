@@ -77,7 +77,7 @@ class Home extends Component {
         return (
             <View style={styles.container}>
             {/* flex: 1, main container  */}
-
+            
                 <View style={styles.header}>
                 {/* top half, contains title and intro message */}
                     <Text style={styles.title}>LazySlide</Text>
