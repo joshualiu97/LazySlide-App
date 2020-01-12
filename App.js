@@ -1,27 +1,14 @@
 import React, { Component } from 'react';
-import {
-  Platform,
-  StyleSheet,
-  Text,
-  View,
-  TouchableOpacity,
-  Alert
-} from 'react-native';
-import { AuthSession } from 'expo';
-import * as Font from 'expo-font';
 import Home from './components/Home.js'
+import Test from './components/Test.js'
+import {createAppContainer} from 'react-navigation';
+import {createStackNavigator} from 'react-navigation-stack';
 
-export default class App extends Component {
-  componentDidMount() {
-    Font.loadAsync({
-      'raleway-regular': require('./assets/fonts/Raleway-Regular.ttf'),
-      'raleway-bold': require('./assets/fonts/Raleway-Bold.ttf'),
-    });
-  }
+const MainNavigator = createStackNavigator({
+  Home: {screen: Home},
+  Test: {screen: Test},
+});
 
-  render() {
-    return (
-      <Home/>
-    );
-  }
-}
+const App = createAppContainer(MainNavigator);
+
+export default App;

@@ -5,11 +5,14 @@ import {
     Text,
     View,
     TouchableOpacity,
-    TouchableWithoutFeedback,
-    Alert
+    Alert,
+    TouchableOpacityBase
 } from 'react-native';
 import { AuthSession } from 'expo';
+import * as Font from 'expo-font';
 import io from 'socket.io-client';
+import {createAppContainer} from 'react-navigation';
+import {createStackNavigator} from 'react-navigation-stack';
 
 // const instructions = Platform.select({
 //   ios: 'Press Cmd+R to reload,\n' + 'Cmd+D or shake for dev menu',
@@ -18,15 +21,21 @@ import io from 'socket.io-client';
 const instructions = "Open and close your curtains with only a press of a button!";
 
 class Home extends Component {
-    // constructor(props) {
-    //     super(props);
-    // }
-
+    static navigationOptions = {
+        headerShown: false,
+    }
+    
     componentDidMount() {
         // console.log("Hi");
-        this.socket = io('http://128.97.244.45:8080',{ //'http://192.168.137.201:8080', {
-            transports: ['websocket'], jsonp: false
+        
+        Font.loadAsync({
+            'raleway-regular': require('../assets/fonts/Raleway-Regular.ttf'),
+            'raleway-bold': require('../assets/fonts/Raleway-Bold.ttf'),
         });
+
+        this.socket = io('http://128.97.244.92:8080',{
+            transports: ['websocket'], jsonp: false
+        });        
     }
 
     componentWillUnmount() {
@@ -48,8 +57,21 @@ class Home extends Component {
     onRelease = (event) => {
         event.stopPropagation();
         this.socket.emit('instruction', 'stop');
-        console.log("stop pressed");
+        console.log("released button");
     }
+
+    onOpenAll = (event) => {
+        event.stopPropagation();
+        this.socket.emit('instruction', 'openall');
+        console.log("open all");
+    }
+
+    onCloseAll = (event) => {
+        event.stopPropagation();
+        this.socket.emit('instruction', 'closeall');
+        console.log("close all");
+    }
+
 
     render() {
         return (
@@ -62,23 +84,58 @@ class Home extends Component {
                     <Text style={styles.instructions}>{instructions}</Text>
                 </View>
 
+
+                <View style={styles.schedule_container}>
+                    <Text style={styles.schedule_header}>Schedule</Text>                    
+                    <View style={styles.buttons}>
+                        <TouchableOpacity onPress={() => this.props.navigation.navigate('Test')}>
+                            <View style={styles.button}>
+                                <Text style={styles.button_text}>Set</Text>
+                            </View>
+                        </TouchableOpacity>
+                    </View>
+                </View>
+
+
                 <View style={styles.button_container}>
                 {/* bottom half container */}
                     
                     <View style={styles.buttons}>
                     {/* button container */}
                         
-                        <TouchableWithoutFeedback onPressIn={this.onOpenPress} onPressOut={this.onRelease}>
+                        <TouchableOpacity onPress={this.onOpenAll}>
                             <View style={styles.button}>
-                                <Text style={styles.button_text}>Open</Text>
+                                <Text style={styles.button_text}>Open All</Text>
                             </View>
-                        </TouchableWithoutFeedback>
+                        </TouchableOpacity>
 
-                        <TouchableWithoutFeedback onPressIn={this.onClosePress} onPressOut={this.onRelease}>
+                        <TouchableOpacity onPress={this.onCloseAll}>
                             <View style={styles.button}>
-                                <Text style={styles.button_text}>Close</Text>
+                                <Text style={styles.button_text}>Close All</Text>
                             </View>
-                        </TouchableWithoutFeedback>
+                        </TouchableOpacity>
+                    </View>
+
+
+
+                    <View style={styles.buttons}>
+                    {/* button container */}
+                        
+                        <TouchableOpacity onPressIn={this.onOpenPress} onPressOut={this.onRelease}>
+                            <View style={styles.button}>
+                                <Text style={styles.button_text}>Open (Hold)</Text>
+                            </View>
+                        </TouchableOpacity>
+
+                        <TouchableOpacity onPressIn={this.onClosePress} onPressOut={this.onRelease}>
+                            <View style={styles.button}>
+                                <Text style={styles.button_text}>Close (Hold)</Text>
+                            </View>
+                        </TouchableOpacity>
+
+                        {/* <TouchableOpacity onPress={() => this.props.navigation.navigate('Test')}>
+                            <Text>HI</Text>
+                        </TouchableOpacity> */}
 
                     </View>
 
@@ -100,7 +157,7 @@ const styles = StyleSheet.create({
     },
     
     header: {
-      flex:2,
+      flex: 2,
       // backgroundColor: 'red',
       width: '80%',
       alignItems: 'center',
@@ -117,10 +174,18 @@ const styles = StyleSheet.create({
       textAlign: 'center',
     },
   
+    schedule_container: {
+        flex: 1.5,
+    },
+    schedule_header: {
+        fontFamily: "raleway-bold",
+        fontSize: 25,
+        textAlign: 'center',
+    },
+
     button_container: {
-      flex: 2,
+      flex: 2.5,
       justifyContent: 'center',
-      flexDirection: 'row',
     },
     buttons: {
       alignItems: 'center',
