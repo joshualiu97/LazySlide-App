@@ -34,7 +34,7 @@ export default class Home extends Component {
       'raleway-bold': require('../assets/fonts/Raleway-Bold.ttf'),
     });
 
-    this.socket = io('http://128.97.244.65:8080',{
+    this.socket = io('http://128.97.244.136:8080',{
       transports: ['websocket'], jsonp: false
     });
   };

@@ -1,16 +1,10 @@
+# LazySlide-App
 IdeaHacks 2020
 Melody Chen, Ellie Cheng, Joshua Liu, Ryan Tong, Eric Wang
 
 LazySlide IOS/Android App developed with React Native.
 Opens curtains with the press of a button.
 Uses socket.io to connect with server and send request to Raspberry Pi.
-
-Make sure to:
-Update the IP address for connection.
-
-Steps for VPN through openconnect(connects to UCLA sercured network):
-sudo openconnect ssl.vpn.ucla.edu
-Enter credentials.
 
 Work in progress:
 Be able to know which state the curtain is in(open or closed).
